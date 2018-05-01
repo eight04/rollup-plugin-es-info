@@ -1,3 +1,5 @@
+const path = require("path");
+
 const fse = require("fs-extra");
 const {analyze} = require("es-info");
 const {createFilter} = require("rollup-pluginutils");
@@ -39,7 +41,9 @@ function factory(options = {}) {
         delete result.dynamicImport;
       }
       
-      infoTable[id] = result;
+      const newId = path.relative(process.cwd(), id);
+      
+      infoTable[newId] = result;
       
       return {code: newCode};
     },
