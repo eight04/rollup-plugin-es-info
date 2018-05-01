@@ -1,7 +1,7 @@
 rollup-plugin-es-info
 =====================
 
-Dump import/export information of each module. Note that when this plugin is activated, it strips all export statements and empties your bundle. The information is extracted by [es-info](https://github.com/eight04/es-info).
+Dump import/export information of each module. The information is extracted by [es-info](https://github.com/eight04/es-info).
 
 Installation
 ------------
@@ -24,11 +24,11 @@ export default {
   },
   plugins: [
     esInfo({
-      include: ["**/*.js"],
+      include: ["**/*"],
       file: "es-info.json",
       import: false,
-      export: true,
-      dynamicImport: false
+      dynamicImport: false,
+      strip: true
     })
   ]
 };
@@ -46,12 +46,11 @@ This module exports a single function.
 * `include?`: `Array<string>`. A list of minimatch pattern. Only matched files are processed. If undefined then match all files.
 * `exclude?`: `Array<string>`. A list of minimatch pattern. Matched files are excluded.
 * `file?`: `string`. The output filename.
-* `ongenerate?`: `function`. When the bundle is generated this function is called with an object map. Each key is the module ID and the value is the information about the module.
-* `import?`: `boolean`. If false then strip `import` information. Default: `true`.
-* `export?`: `boolean`. If false then strip `export` information. Default: `true`.
-* `dynamicImport?`: `boolean`. If false then strip `dynamicImport` information. Default: `true`.
-
-You must define `options.file` or `options.ongenerate`.
+* `ongenerate?`: `function`. When the bundle is generated, this function is called with an object map. Each key is the module path relative to cwd and the value is the information about the module.
+* `import?`: `boolean`. If true then save `import` information. Default: `true`.
+* `export?`: `boolean`. If true then save `export` information. Default: `true`.
+* `dynamicImport?`: `boolean`. If true then save `dynamicImport` information. Default: `true`.
+* `strip?`: `boolean`. If true then strip all the codes and leave only `import`/`export` statements, resulting a faster build. Turn this on if you don't need the actual bundle e.g. you are just linting the code/verifying the dependency tree. Default: `false`.
 
 Changelog
 ---------
