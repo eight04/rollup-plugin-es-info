@@ -7,13 +7,11 @@ const {createFilter} = require("rollup-pluginutils");
 const DEFAULT = {
   import: true,
   export: true,
-  dynamicImport: true
+  dynamicImport: true,
+  strip: false
 };
 
 function factory(options = {}) {
-  if (!options.file && !options.ongenerate) {
-    throw new Error("must define `options.file` or `options.ongenerate`");
-  }
   options = Object.assign({}, DEFAULT, options);
   const filter = createFilter(options.include, options.exclude);
   const infoTable = {};
@@ -27,9 +25,12 @@ function factory(options = {}) {
       const ast = this.parse(code);
       const result = analyze(ast, {dynamicImport: true});
       
-      let newCode = Object.keys(result.import).map(i => `import ${JSON.stringify(i)};`).join("\n") +
-        "\n" +
-        result.dynamicImport.map(i => `import(${JSON.stringify(i)});`).join("\n");
+      if (options.strip) {
+        code = [
+          ...Object.keys(result.import).map(i => `import ${JSON.stringify(i)};`),
+          ...result.dynamicImport.map(i => `import(${JSON.stringify(i)});`).join("\n")
+        ].join("\n");
+      }
         
       if (!options.import) {
         delete result.import;
@@ -42,15 +43,17 @@ function factory(options = {}) {
       }
       
       const newId = path.relative(process.cwd(), id);
-      
       infoTable[newId] = result;
       
-      return {code: newCode};
+      if (options.strip) {
+        return {code};
+      }
     },
     ongenerate() {
       if (options.file) {
         fse.outputJsonSync(options.file, infoTable, {spaces: 2});
-      } else {
+      }
+      if (options.ongenerate) {
         options.ongenerate(infoTable);
       }
     }
