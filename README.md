@@ -1,6 +1,8 @@
 rollup-plugin-es-info
 =====================
 
+[![Coverage Status](https://coveralls.io/repos/github/eight04/rollup-plugin-es-info/badge.svg?branch=master)](https://coveralls.io/github/eight04/rollup-plugin-es-info?branch=master)
+
 Dump import/export information of each module. The information is extracted by [es-info](https://github.com/eight04/es-info).
 
 Installation
@@ -45,7 +47,7 @@ This module exports a single function.
 
 * `include?`: `Array<string>`. A list of minimatch pattern. Only matched files are processed. If undefined then match all files.
 * `exclude?`: `Array<string>`. A list of minimatch pattern. Matched files are excluded.
-* `file?`: `string`. The output filename.
+* `file?`: `string`. A filename. If set then output the information table to the file.
 * `ongenerate?`: `function`. When the bundle is generated, this function is called with an object map. Each key is the module path relative to cwd and the value is the information about the module.
 * `import?`: `boolean`. If true then save `import` information. Default: `true`.
 * `export?`: `boolean`. If true then save `export` information. Default: `true`.
