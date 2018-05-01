@@ -43,7 +43,7 @@ function test(file, expect) {
 }
 
 function resolveFile(file) {
-  return path.resolve(`${__dirname}/fixtures/${file}`);
+  return path.relative(process.cwd(), path.resolve(`${__dirname}/fixtures/${file}`));
 }
 
 describe("main", () => {
