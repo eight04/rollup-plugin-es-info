@@ -1,6 +1,7 @@
 rollup-plugin-es-info
 =====================
 
+[![Build Status](https://travis-ci.org/eight04/rollup-plugin-es-info.svg?branch=master)](https://travis-ci.org/eight04/rollup-plugin-es-info)
 [![Coverage Status](https://coveralls.io/repos/github/eight04/rollup-plugin-es-info/badge.svg?branch=master)](https://coveralls.io/github/eight04/rollup-plugin-es-info?branch=master)
 
 Dump import/export information of each module. The information is extracted by [es-info](https://github.com/eight04/es-info).
