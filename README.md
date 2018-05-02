@@ -52,7 +52,7 @@ This module exports a single function.
 * `import?`: `boolean`. If true then save `import` information. Default: `true`.
 * `export?`: `boolean`. If true then save `export` information. Default: `true`.
 * `dynamicImport?`: `boolean`. If true then save `dynamicImport` information. Default: `true`.
-* `strip?`: `boolean`. If true then strip all the codes and leave only `import`/`export` statements, resulting a faster build. Turn this on if you don't need the actual bundle e.g. you are just linting the code/verifying the dependency tree. Default: `false`.
+* `strip?`: `boolean`. If true then strip all the codes and leave only `import` statements, resulting a faster build. Turn this on if you don't need the actual bundle e.g. you are just linting the code/verifying the dependency tree. Default: `false`.
 
 Changelog
 ---------
