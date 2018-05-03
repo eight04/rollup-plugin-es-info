@@ -58,6 +58,10 @@ This module exports a single function.
 Changelog
 ---------
 
+* 0.1.1 (May 3, 2018)
+
+  - Fix: gencode problem for dynamic imports.
+
 * 0.1.0 (May 2, 2018)
 
   - Initial releast.
