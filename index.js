@@ -1,5 +1,7 @@
 const path = require("path");
 
+const sortPaths = require("sort-paths");
+const orderedJson = require("ordered-json");
 const fse = require("fs-extra");
 const {analyze} = require("es-info");
 const {createFilter} = require("rollup-pluginutils");
@@ -51,7 +53,11 @@ function factory(options = {}) {
     },
     ongenerate() {
       if (options.file) {
-        fse.outputJsonSync(options.file, infoTable, {spaces: 2});
+        const content = orderedJson.stringify(infoTable, {
+          space: 2,
+          order: sortPaths(Object.keys(infoTable), path.sep)
+        });
+        fse.outputFileSync(options.file, content);
       }
       if (options.ongenerate) {
         options.ongenerate(infoTable);
