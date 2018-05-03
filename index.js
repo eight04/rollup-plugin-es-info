@@ -28,7 +28,7 @@ function factory(options = {}) {
       if (options.strip) {
         code = [
           ...Object.keys(result.import).map(i => `import ${JSON.stringify(i)};`),
-          ...result.dynamicImport.map(i => `import(${JSON.stringify(i)});`).join("\n")
+          ...result.dynamicImport.map(i => `import(${JSON.stringify(i)});`)
         ].join("\n");
       }
         
