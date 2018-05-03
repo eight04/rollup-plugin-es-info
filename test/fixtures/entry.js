@@ -1,2 +1,2 @@
 import {foo} from "./foo";
-export default foo;
+export default () => import("./bar");

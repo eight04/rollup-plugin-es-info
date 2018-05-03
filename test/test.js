@@ -6,26 +6,23 @@ const rollup = require("rollup");
 
 const esInfo = require("..");
 
-function test(file, expect) {
-  const newExpect = {};
-  for (const key of Object.keys(expect)) {
-    const newKey = resolveFile(key);
-    newExpect[newKey] = expect[key];
-  }
-  expect = newExpect;
-  const generated = {};
-  generated.promise = new Promise((resolve, reject) => {
-    generated.resolve = resolve;
-    generated.reject = reject;
-  });
+function bundle(file, options) {
+  const codes = [];
+  const generated = deferred();
+  options = Object.assign({
+    ongenerate(info) {
+      generated.resolve(info);
+    }
+  }, options);
   return rollup.rollup({
     input: [resolveFile(file)],
     plugins: [
-      esInfo({
-        ongenerate(info) {
-          generated.resolve(info);
+      esInfo(options),
+      {
+        transform(code) {
+          codes.push(code);
         }
-      })
+      }
     ],
     experimentalCodeSplitting: true,
     experimentalDynamicImport: true
@@ -36,10 +33,34 @@ function test(file, expect) {
       freeze: false,
       sourcemap: true
     }))
-    .then(() => generated.promise)
+    .then(result => {
+      return {result, codes, generated};
+    });
+}
+
+function test(file, expect) {
+  const newExpect = {};
+  for (const key of Object.keys(expect)) {
+    const newKey = resolveFile(key);
+    newExpect[newKey] = expect[key];
+  }
+  expect = newExpect;
+  return bundle(file)
+    .then(({generated}) => generated)
     .then(info => {
       assert.deepStrictEqual(info, expect);
     });
+}
+
+function deferred() {
+  let resolve, reject;
+  const q = new Promise((_resolve, _reject) => {
+    resolve = _resolve;
+    reject = _reject;
+  });
+  q.resolve = resolve;
+  q.reject = reject;
+  return q;
 }
 
 function resolveFile(file) {
@@ -62,7 +83,7 @@ describe("main", () => {
           all: false,
           named: []
         },
-        dynamicImport: []
+        dynamicImport: ["./bar"]
       },
       "foo.js": {
         import: {},
@@ -72,7 +93,24 @@ describe("main", () => {
           all: false
         },
         dynamicImport: []
+      },
+      "bar.js": {
+        import: {},
+        export: {
+          default: true,
+          named: [],
+          all: false
+        },
+        dynamicImport: []
       }
     })
+  );
+  
+  it("dynamicImport + strip", () => 
+    bundle("entry.js", {strip: true})
+      .then(({codes: [code]}) => {
+        assert.equal(code, `import "./foo";
+import("./bar");`);
+      })
   );
 });
