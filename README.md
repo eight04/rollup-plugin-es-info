@@ -58,6 +58,10 @@ This module exports a single function.
 Changelog
 ---------
 
+* 0.1.2 (May 3, 2018)
+
+  - Change: keep the key order of output JSON. use `sort-paths`.
+
 * 0.1.1 (May 3, 2018)
 
   - Fix: gencode problem for dynamic imports.
