@@ -51,7 +51,7 @@ function factory(options = {}) {
         return {code};
       }
     },
-    ongenerate() {
+    generateBundle() {
       if (options.file) {
         // sort object
         const table = orderedObject.create(
