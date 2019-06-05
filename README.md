@@ -58,6 +58,10 @@ This module exports a single function.
 Changelog
 ---------
 
+* 0.2.0 (Jun 5, 2019)
+
+  - Bump dependencies. Update rollup to 1.13.1.
+
 * 0.1.3 (May 3, 2018)
 
   - Change: keep the key order of imports.
