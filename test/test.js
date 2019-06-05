@@ -23,9 +23,7 @@ function bundle(file, options) {
           codes.push(code);
         }
       }
-    ],
-    experimentalCodeSplitting: true,
-    experimentalDynamicImport: true
+    ]
   })
     .then(bundle => bundle.generate({
       format: "cjs",
