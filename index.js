@@ -4,7 +4,7 @@ const sortPaths = require("sort-paths");
 const orderedObject = require("ordered-object");
 const fse = require("fs-extra");
 const {analyze} = require("es-info");
-const {createFilter} = require("rollup-pluginutils");
+const {createFilter} = require("@rollup/pluginutils");
 
 const DEFAULT = {
   import: true,
@@ -20,12 +20,12 @@ function factory(options = {}) {
   
   return {
     name: "rollup-plugin-es-info",
-    transform(code, id) {
+    async transform(code, id) {
       if (!filter(id)) {
         return;
       }
       const ast = this.parse(code);
-      const result = analyze(ast, {dynamicImport: true});
+      const result = await analyze({ast, subtree: true});
       
       if (options.strip) {
         code = [
