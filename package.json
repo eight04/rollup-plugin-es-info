@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-es-info",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Dump import/export information of each module",
   "keywords": [
     "rollup-plugin",
