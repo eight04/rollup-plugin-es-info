@@ -26,9 +26,7 @@ function bundle(file, options) {
     ]
   })
     .then(bundle => bundle.generate({
-      format: "cjs",
-      legacy: true,
-      freeze: false,
+      format: "es",
       sourcemap: true
     }))
     .then(result => {
@@ -73,7 +71,8 @@ describe("main", () => {
           "./foo": {
             default: false,
             all: false,
-            named: ["foo"]
+            named: ["foo"],
+            used: []
           }
         },
         export: {

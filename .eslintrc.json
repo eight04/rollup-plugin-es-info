@@ -13,5 +13,8 @@
 	},
 	"extends": [
 		"eslint:recommended"
-	]
+	],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  }
 }
