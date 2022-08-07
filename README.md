@@ -58,6 +58,10 @@ This module exports a single function.
 Changelog
 ---------
 
+* 0.3.0 (Aug 8, 2022)
+
+  - Bump dependencies. Update rollup to 2.77.2.
+
 * 0.2.0 (Jun 5, 2019)
 
   - Bump dependencies. Update rollup to 1.13.1.
