@@ -13,7 +13,7 @@
   "main": "index.js",
   "files": [],
   "scripts": {
-    "test": "eslint . && c8 --reporter=html mocha -b",
+    "test": "eslint . && c8 --reporter=lcov mocha -b",
     "preversion": "npm test",
     "postversion": "git push --follow-tags && npm publish"
   },
